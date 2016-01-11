@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+	{% block Title %}
+		Mundo Multimedia
+	{% endblock %}
+
+	
+	{% block content %}
+		<br>
+			{% if filtrado %}
+			<center>
+				<h5 class="alert alert-info" role="alert">Filtrando noticias por seccion:<b style="color:black;">{{filtrado}}</b></h5>
+			</center>
+			{% endif %}
+		
+		<h2>Noticias</h2>
+		{% if news %}
+		<ul>
+			{% for x in news %}
+				<div class="media">
+					{% if x.image %}
+					<div class="media-left">
+						<a href="#">
+      						<img class="media-object" height="150px" width="150px" src="{% static x.image %}" alt="{{x.title}}">
+    					</a>
+    				</div>
+    				{% endif %}
+					<div class="media-body">
+						<h4 class="media-heading"><a href = "/news/{{x.date.year}}-{{x.date.month}}-{{x.date.day}}/{{x.id}}/">{{x.title}}</a>
+						</h4>
+						<p>{{x.description}}...</p>
+					</div>
+				</div>
+
+			{% endfor %}
+		</ul>
+		{% else %}
+			<h3>No hay noticias</h3>
+		{% endif %}
+
+	{% endblock %}

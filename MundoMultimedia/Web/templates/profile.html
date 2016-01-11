@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block Title %}
+	{% if userName %}
+		{{userName}}
+	{% else %}
+		Perfil
+	{% endif %}
+{% endblock %}
+
+
+{% block content %}
+		<center><h1>Perfil de {{usuario.nick}}</h1></center>
+	{% if usuario %}
+		{% if usuario.vip %}
+			<center><h3><span class="label label-warning"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>  Usuario VIP <span class="glyphicon glyphicon-star" aria-hidden="true"></span> </span></h3></center>
+			<br>
+			<a  class="btn btn-primary" href="/news/write/">Nueva noticia</a><br>
+		{% endif %}
+		<br>
+		<a class="btn btn-primary" href="/news/profile/modify/">Modificar perfil</a>
+		<br><br>
+		{% load staticfiles %}
+		
+		<img class="img-circle" src="{% static image %}" height="200px">
+		<h3>Usuario: {{usuario.nick}}</h3>
+		<p>Email: {{usuario.email}}</p>
+		<p>Nombre: {{usuario.name}}</p>
+		<p>Apellidos: {{usuario.surname}}</p>
+		<p>Edad: {{usuario.age}}</p>
+		<p>Sexo: {{usuario.gender}}</p>
+	{% else %}
+		<br>
+		<br>
+		<br>
+		<h4 class="alert alert-info" role="alert">Informacion no disponible, requiere iniciar sesion.</h4>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% endif %}
+
+{% endblock %}

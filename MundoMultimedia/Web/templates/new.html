@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+	
+	{% block Title %}
+		{{ new.title }}
+	{% endblock %}
+
+
+{% block content %}
+
+	<h1>{{ new.title }}</h1>
+	<h6>{{new.date}}</h6>
+	{% load staticfiles %}
+	{% if new.image %}
+	<center><img src="{% static new.image %}" height="200px"></center>
+	{% endif %}	
+	<br>
+	<p>{{ new.description|linebreaksbr }}</p>
+	<h5>Escrito por: <b>{{ new.author }}</b></h5>
+
+	<h4>Calificacion: {{new.punctuation}}</h4>
+	{% if userName %}
+		{% if not voto %}	
+	<form method="POST" action="/news/{{new.date.year}}-{{new.date.month}}-{{new.date.day}}/{{new.id}}/vote/">
+		{%csrf_token%}
+		<input type="radio" name="vote" value="1">
+		<input type="radio" name="vote" value="2">
+		<input type="radio" name="vote" value="3">
+		<input type="radio" name="vote" value="4">
+		<input type="radio" name="vote" value="5">
+		<input type="submit" value="Votar" class="btn btn-primary">
+	</form>
+		{% endif %}
+	{% endif %}
+	<hr>
+
+	<h3>Comentarios</h3>
+
+	{% if userName %}
+
+	<form width="80%" id='form' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+	    {{form.as_p}}
+		<p><input type='submit' class="btn btn-primary" value='Comentar'></p>
+	</form>
+	{% else %}
+	<p>Inicia sesion o registrate <a href="/news/register/" >aqui</a> para poder comentar.</p>
+
+	{% endif %}
+	<hr>
+	{% if comments %}
+		{% for x in comments %}
+			
+			<pre><h5>-{{ x.date }}-</h5><h5>{{ x.author }} dijo:</h5>"{{ x.description|linebreaksbr }}"
+			</pre>
+		{% endfor %}
+	{% else %}
+		<p>No hay comentarios.</p>
+	{% endif %}
+
+{% endblock %}

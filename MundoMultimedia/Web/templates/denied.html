@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+	{% block Title %}
+		Redirigiendo...
+	{% endblock %}
+	{% block Head %}
+		<meta http-equiv="refresh" content="3;url={{ redirigir}}" />
+	{% endblock %}
+
+{% block Header %}
+
+{% endblock %}
+
+{% block Nav %}
+
+{% endblock %}
+
+{% block content %}
+	<center><div class="alert alert-danger" role="alert"><h4>Lo sentimos, petición denegada vuelva a intentarlo de nuevo</h4></div></center>	
+	<center><div class="alert alert-info" role="alert"><h5>Te redigiremos en 3 segundos...</h5></div></center>
+{% endblock %}
+
+{% block Aside %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+		{% block Head %}
+			<meta http-equiv="refresh" content="3;url={{ redirigir}}" />
+		{% endblock %}
+	{% block Title %}
+		Redirigiendo...
+	{% endblock %}
+
+
+{% block Nav %}
+
+{% endblock %}
+
+{% block content %}
+	<br>
+	<br>
+	<br>
+	<center><div class="alert alert-success" role="alert"><h4>Petición aceptada con éxito.</h4></div></center>
+	<center><div class="alert alert-info" role="alert"><h5>Te redigiremos en 3 segundos...</h5></div></center>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+{% endblock %}
+
+{% block Aside %}
+
+{% endblock %}

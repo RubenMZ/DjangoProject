@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block Title %}
+	Registro
+{% endblock %}
+
+{% block content %}
+	{% if not userName %}
+		<br>
+		<br>
+		<br>
+		<center><div class="alert alert-danger" role="alert"><h4>Accion no disponible, debes iniciar sesion.</h4></div></center>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% else %}
+
+	{% if not usuario.vip %}
+		<br>
+		<br>
+		<br>
+		<center><div class="alert alert-danger" role="alert"><h4>Necesitas ser usuario vip para escribir una noticia.</h4></div></center>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% else %}
+
+		{% if mensaje %}
+			<p class="alert alert-danger" role="alert">{{ mensaje }}</p>
+		{% endif %}
+
+	<h1>Nueva noticia</h1>
+	<form id='form' method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+	    {{form.as_p}}
+		<p><input type='submit' class="btn btn-primary" value='Publicar'></p>
+	</form>
+
+	{% endif %}
+	
+
+	{% endif %}
+{% endblock %}

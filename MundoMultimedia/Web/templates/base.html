@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<html>
+
+	<head>
+
+		<title>{% block Title %}{% endblock %}</title>
+			<meta charset="utf-8">
+    		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+			<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/png"/>
+			<link rel="stylesheet" type="text/css" href="{% static 'css/stylebase.css' %}">
+
+			<link rel="stylesheet" type="text/css" href="{% static 'css/animations.css' %}">
+
+			<!--            BOOTSTRAP           -->
+			<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+			
+			<link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+		    <!-- Latest compiled and minified CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+			<!-- Optional theme -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+			<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+			<link rel="stylesheet" type="text/css" href="{% static 'css/templates.css' %}">
+
+			<script type="text/javascript">
+				function altura(){
+					var section = document.getElementById("section").style.height;
+					var aside =document.getElementById("aside").style.height; 
+
+					if (section> aside) {
+						document.getElementById("aside").style.height= section;
+					}else{
+						document.getElementById("section").style.height =aside;
+					}
+				}
+
+			</script>
+
+		{% block Head %}
+
+		{% endblock %}
+
+	</head>
+
+<body onload="altura()" style="background:url({% static 'images/background.jpg' %}) fixed;">
+	<header>
+		{% block Header %}
+		<div class="row">
+			<div class="col-md-7">
+				<a id="cabecera" class="bounceIn" href="/news/"><img src="{% static 'images/main.png' %}"></a>
+			</div>
+			
+			<div id="login" class="col-md-5 bounceInRight" >
+			{% if userName %}
+				<div id="usuario">
+					<p><h4>Hola, <a href="/news/profile/">{{ userName }}</h4></p>
+					<a href="/news/logout/" class="btn btn-primary">Salir</a>
+				</div>
+			{% else %}
+				<form  method="POST" class="navbar-form navbar-left" action="/news/login/">
+					{% csrf_token %}
+					<input type="text" name="nick" class="form-control" placeholder="User">
+					<input type="password" name="pass" class="form-control" placeholder="Password">
+					<br>
+					<input type="submit" class="btn btn-primary" value="Entrar">
+					<a href="/news/register" class="btn btn-primary navbar-btn" >Registrate!</a>
+				</form>
+				
+			{% endif %}
+			</div>
+		</div>
+
+		{% endblock %}
+	</header>
+
+	<nav class="navbar navbar-inverse" style="margin-bottom:0px;">
+		{% block Nav %}
+			<ul class="nav navbar-nav ">
+		    <li class ="bounceInLeft"><a href="/news/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>  Inicio  </a></li>
+		    	
+		     <li class ="bounceInLeft"><a href="/news/Peliculas"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>  Peliculas  </a></li>
+
+		     <li class ="bounceInLeft"><a href="/news/Series"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>  Series  </a></li>
+
+		     <li class ="bounceInLeft"><a href="/news/Videojuegos"><span class="glyphicon glyphicon-knight" aria-hidden="true"></span>  Videojuegos  </a></li>
+
+		     <li class ="bounceInLeft"><a href="/news/Informatica"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>  Informatica  </a></li>
+
+		     <li class ="bounceInLeft"><a href="/news/Musica"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Musica  </a></li>
+
+		    <li class ="bounceInLeft"><a href="/news/Actualidad"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>  Actualidad  </a></li>
+
+		        {% if userName %}
+					<li id="configuracion" class ="bounceInRight"><a id="configuracion" href="/news/profile"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Configuración usuario</a></li>
+				{% endif %}
+		    </ul>
+		{% endblock %}
+	</nav>
+
+	<div class=" row contenido" >
+	<section class="col-md-8">
+		<div id="section">
+		{% block content %}
+
+		{% endblock %}
+		</div>
+	</section>
+
+	<aside class="col-md-4">
+		<div id="aside">
+		{% block Aside %}
+			<h3>Secciones</h3>
+		<div>
+		<ul class="list-group">
+			{% if sections %}
+				{% for x in sections %}
+					<div  class="bounceInRight" style="-webkit-animation-delay: {{forloop.counter}}00ms;animation-delay: {{forloop.counter}}00ms;"><a  class="bounceInRight" href = "/news/{{x.name}}"><center><li class="list-group-item active">{{x.name}}</li></center> </a></div>
+					<br>
+				{% endfor %}
+
+			{% else %}
+				<h3>No disponible</h3>
+			{% endif %}
+		</ul>
+		</div>
+
+		{% endblock %}
+	</div>
+	</aside>
+	</div>
+
+	<footer class="alert alert-info" style="margin-bottom:0px;">
+	{% block Footer %}
+           <p>2016 All rights reserved. MUNDOMULTIMEDIA para Programación Web</p>
+	{% endblock %}
+	</footer>
+
+</body>
+
+</html>

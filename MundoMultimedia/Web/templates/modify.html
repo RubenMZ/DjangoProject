@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block Title %}
+	Modificar
+{% endblock %}
+
+{% block content %}
+	{% if userName %}
+
+		{% if mensaje %}
+			<center><p class="alert alert-danger" role="alert">{{ mensaje }}</p></center>
+		{% endif %}
+		<h1>Modificar perfil</h1>
+		<form style="padding-left:20px;" method="POST" action="/news/profile/modify/send/">
+			{% csrf_token %}
+			Nick: {{usuario.nick}}
+			<br>
+			Password: <input value = "{{usuario.password}}" type ="password" name="password1" placeholder="Password"><br>
+			Repite password: <input value = "{{usuario.password}}" type ="password" name="password2" placeholder="Repite password"><br>
+			Email: <input value="{{usuario.email}}" type ="email" name="email" placeholder="Email"><br>
+			Nombre*: <input value="{{usuario.name}}" type ="text" name="name" placeholder="Nombre"><br>
+			Apellidos*: <input value="{{usuario.surname}}" type ="text" name="surname" placeholder="Apellidos"><br>
+			Edad*: <input value="{{usuario.age}}" type="number" name="age" min="1" max="120" value="1">
+			<br>
+			Sexo*: {{usuario.gender}}
+			<br>
+			*: Son opcionales.
+			<br><br>
+			<input class="btn btn-primary" type="submit" value="Enviar" name="boton">
+
+		</form>
+	{% else %}
+		<br>
+		<br>
+		<br>
+		<h4 class="alert alert-info" role="alert">No puedes modificar usuario, necesitas iniciar sesion.</h4>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	{% endif %}
+{% endblock %}
